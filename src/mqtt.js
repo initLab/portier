@@ -1,17 +1,17 @@
 import * as mqtt from 'mqtt';
 import { config } from './config.js';
+import { createDebug } from './debug.js';
+
+const debug = createDebug('mqtt');
 
 export const client = mqtt.connect(config.mqtt.brokerUrl, config.mqtt?.opts || {});
 
 client.on('connect', function() {
-    console.log('MQTT connected');
+    debug('Connected');
 });
 
-client.on('message', function(topic, payload, packet) {
-    console.log(topic, {
-        ...packet,
-        payload: payload.toString(),
-    });
+client.on('message', function(topic, payload) {
+    debug('message', topic, payload.toString());
 });
 
 client.subscribe('NetControl/#');
