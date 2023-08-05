@@ -1,5 +1,0 @@
-{
-    "mqtt": {
-        "brokerUrl": "mqtts://spitfire.initlab.org:8883"
-    }
-}

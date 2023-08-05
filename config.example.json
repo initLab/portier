@@ -1,0 +1,57 @@
+{
+    "mqtt": {
+        "brokerUrl": "mqtt://example.com"
+    },
+    "doors": {
+        "example_door": {
+            "name": {
+                "en": "Example Door",
+                "bg": "Примерна Врата"
+            },
+            "controller": {
+                "type": "dummy"
+            },
+            "actions": {
+                "open": {
+                    "roles": ["board_member", "trusted_member"]
+                }
+            }
+        },
+        "example_door_2": {
+            "name": {
+                "en": "Example Door 2",
+                "bg": "Примерна Врата 2"
+            },
+            "controller": {
+                "type": "mqtt",
+                "options": {
+                    "actions": {
+                        "open": {
+                            "topic": "example/123",
+                            "value": "1"
+                        },
+                        "unlock": {
+                            "topic": "example/456",
+                            "value": "1"
+                        },
+                        "lock": {
+                            "topic": "example/789",
+                            "value": "1"
+                        }
+                    }
+                }
+            },
+            "actions": {
+                "open": {
+                    "roles": ["board_member", "trusted_member", "landlord", "tenant"]
+                },
+                "unlock": {
+                    "roles": ["board_member", "trusted_member", "landlord", "tenant"]
+                },
+                "lock": {
+                    "roles": ["board_member", "trusted_member", "landlord", "tenant"]
+                }
+            }
+        }
+    }
+}
