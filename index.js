@@ -1,7 +1,0 @@
-import { app } from './app.js';
-import './src/mqtt.js';
-
-const port = process.env.PORT || 3000;
-app.listen(port, function() {
-   console.log('Listening on port', port);
-});

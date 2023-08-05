@@ -1,5 +1,5 @@
 import express from 'express';
-import { createDebug } from './src/debug.js';
+import { createDebug } from './debug.js';
 
 const debug = createDebug('express');
 export const app = express();

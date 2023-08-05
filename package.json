@@ -1,12 +1,12 @@
 {
   "name": "portier",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "src/index.js",
   "repository": "git@github.com:initLab/portier.git",
   "author": "Vencislav Atanasov <git@6bez10.info>",
   "license": "MIT",
   "scripts": {
-    "start": "node index.js"
+    "start": "node src/index.js"
   },
   "type": "module",
   "dependencies": {
