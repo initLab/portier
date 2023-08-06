@@ -1,15 +1,12 @@
-import { doors } from '../../doors.js';
+import { listUserAccessibleDoors } from '../../doors.js';
+import { getUser } from '../../user.js';
 
 export function getDoors(req, res) {
-    // TODO
-    const userRoles = ['trusted_member'];
-    const userLang = 'en';
+    const user = getUser();
 
-    res.json(Object.entries(doors).map(([id, door]) => ({
-        id,
-        name: door.name[userLang],
-        supported_actions: Object.entries(door.actions).filter(([_, actionOptions]) =>
-            actionOptions.roles.reduce((prev, curr) => prev || userRoles.includes(curr), false)
-        ).map(([action]) => action),
-    })).filter(door => door.supported_actions.length > 0));
+    if (!user) {
+        return res.status(401).end();
+    }
+
+    res.json(listUserAccessibleDoors(user));
 }
