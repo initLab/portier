@@ -2,6 +2,10 @@
     "mqtt": {
         "brokerUrl": "mqtt://example.com"
     },
+    "oauth2": {
+        "baseUrl": "https://example.com",
+        "resourceOwnerPath": "/user"
+    },
     "doors": {
         "example_door": {
             "name": {
