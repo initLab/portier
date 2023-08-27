@@ -33,3 +33,7 @@ export function subscribe(topic) {
 export function addEventListener(event, callback) {
     client.on(event, callback);
 }
+
+export function publish(topic, message) {
+    client.publish(topic, message);
+}
