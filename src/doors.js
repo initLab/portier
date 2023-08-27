@@ -57,7 +57,7 @@ function handleMessage(topic, payload, packet) {
 
 export const listUserAccessibleDoors = user => doors.map(door => ({
     id: door.id,
-    name: door.name[user.language],
+    name: door.name[user.locale],
     supported_actions: Object.entries(door.actions).filter(([_, actionOptions]) =>
         isAuthorised(user.roles, actionOptions.roles)
     ).map(([action]) => action),
