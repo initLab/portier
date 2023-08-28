@@ -1,4 +1,4 @@
-import { publish } from '../mqtt.js';
+import { publish } from '../mqtt/index.js';
 
 export function getMqttController(options) {
     function executeAction(actionName) {

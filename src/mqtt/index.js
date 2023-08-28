@@ -1,6 +1,6 @@
 import * as mqtt from 'mqtt';
-import { config } from './config.js';
-import { createDebug } from './debug.js';
+import { config } from '../config.js';
+import { createDebug } from '../debug.js';
 
 const debug = createDebug('mqtt');
 

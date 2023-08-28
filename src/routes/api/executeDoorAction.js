@@ -1,6 +1,7 @@
 import { config } from '../../config.js';
 import { isAuthorised } from '../../user.js';
 import { getController } from '../../doorController/index.js';
+import { sendNotification } from '../../mqtt/notification.js';
 
 export function executeDoorAction(req, res) {
     if (!req.user) {
@@ -18,7 +19,10 @@ export function executeDoorAction(req, res) {
         return res.status(404).end();
     }
 
-    const door = doors[doorId];
+    const door = {
+        id: doorId,
+        ...doors[doorId],
+    };
 
     if (!door.actions.hasOwnProperty(action)) {
         return res.status(404).end();
@@ -33,5 +37,8 @@ export function executeDoorAction(req, res) {
     // user is authorized to perform action
     const controller = getController(doorId);
     controller.executeAction(action);
+
+    sendNotification(req.user, door, action);
+
     res.status(204).end();
 }

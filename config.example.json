@@ -1,6 +1,9 @@
 {
     "mqtt": {
-        "brokerUrl": "mqtt://example.com"
+        "brokerUrl": "mqtt://example.com",
+        "notifications": {
+            "topic": "portier/notifications"
+        }
     },
     "oauth2": {
         "baseUrl": "https://example.com",

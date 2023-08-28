@@ -1,7 +1,7 @@
 import { config } from './config.js';
 import { isAuthorised } from './user.js';
 import { createDebug } from './debug.js';
-import { addEventListener } from './mqtt.js';
+import { addEventListener } from './mqtt/index.js';
 
 const debug = createDebug('doors');
 

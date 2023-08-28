@@ -1,5 +1,5 @@
 import { app } from './app.js';
-import { init as initMqtt } from './mqtt.js';
+import { init as initMqtt } from './mqtt/index.js';
 import { createDebug } from './debug.js';
 import { init as initDoors } from './doors.js';
 
