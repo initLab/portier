@@ -8,15 +8,15 @@ export function sendNotification(user, door, action) {
         return;
     }
 
-    const topic = notificationConfig.topic + '/' + door.id + '/' + action;
-    const message = JSON.stringify({
+    const topicSuffix = '/' + door.id + '/' + action;
+    const privateMessage = {
         ts: Date.now(),
         door: {
             id: door.id,
             name: door.name,
         },
         action,
-        user: user.announce_my_presence ? {
+        user: {
             id: user.id,
             name: user.name,
             url: user.url,
@@ -25,8 +25,13 @@ export function sendNotification(user, door, action) {
             github: user.github,
             jabber: user.jabber,
             picture: user.picture,
-        } : null,
-    });
+        },
+    };
+    const publicMessage = {
+        ...privateMessage,
+        user: user.announce_my_presence ? privateMessage.user : null,
+    };
 
-    publish(topic, message);
+    publish(notificationConfig.privateTopic + topicSuffix, JSON.stringify(privateMessage));
+    publish(notificationConfig.publicTopic + topicSuffix, JSON.stringify(publicMessage));
 }
