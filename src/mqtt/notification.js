@@ -4,7 +4,7 @@ import { config } from '../config.js';
 export function sendNotification(user, door, action) {
     const notificationConfig = config?.mqtt?.notifications;
 
-    if (!notificationConfig || !notificationConfig.hasOwnProperty('topic')) {
+    if (!notificationConfig) {
         return;
     }
 
@@ -32,6 +32,11 @@ export function sendNotification(user, door, action) {
         user: user.announce_my_presence ? privateMessage.user : null,
     };
 
-    publish(notificationConfig.privateTopic + topicSuffix, JSON.stringify(privateMessage));
-    publish(notificationConfig.publicTopic + topicSuffix, JSON.stringify(publicMessage));
+    if (notificationConfig.hasOwnProperty('privateTopic')) {
+        publish(notificationConfig.privateTopic + topicSuffix, JSON.stringify(privateMessage));
+    }
+
+    if (notificationConfig.hasOwnProperty('publicTopic')) {
+        publish(notificationConfig.publicTopic + topicSuffix, JSON.stringify(publicMessage));
+    }
 }
