@@ -8,7 +8,7 @@ export function sendNotification(user, door, action) {
         return;
     }
 
-    const topicSuffix = '/' + door.id + '/' + action;
+    const topicSuffix = '/doorAction/' + door.id + '/' + action;
     const privateMessage = {
         ts: Date.now(),
         door: {
