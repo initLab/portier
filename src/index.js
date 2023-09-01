@@ -9,6 +9,11 @@ initMqtt();
 initDoors();
 
 const port = process.env.PORT || 3000;
-app.listen(port, function() {
+const host = process.env.HOST || undefined;
+
+app.listen({
+   port,
+   host,
+}, function() {
    debug('Listening on port', port);
 });
