@@ -1,23 +1,17 @@
-import { config } from '../config.js';
 import { getMqttController } from './mqtt.js';
+import { InvalidConfigurationError } from '../errors.js';
 
-export function getController(doorId) {
-    const door = config.doors?.[doorId];
-
-    if (!door) {
-        throw new Error('Door ' + doorId + ' not found');
-    }
-
+export function getController(door) {
     const controller = door?.controller;
 
     if (!controller) {
-        throw new Error('No controller configured for door ' + doorId);
+        throw new InvalidConfigurationError('No controller configured for door ' + door.id);
     }
 
     switch (controller?.type) {
         case 'mqtt':
             return getMqttController(controller?.options || {});
         default:
-            throw new Error('Unknown controller type ' + controller?.type + ' for door ' + doorId);
+            throw new InvalidConfigurationError('Unknown controller type ' + controller?.type + ' for door ' + door.id);
     }
 }

@@ -1,7 +1,8 @@
-import { config } from '../../config.js';
-import { isAuthorised } from '../../user.js';
+import { isAuthorized } from '../../user.js';
 import { getController } from '../../doorController/index.js';
 import { sendNotification } from '../../mqtt/notification.js';
+import { InvalidInputError, NotFoundError } from '../../errors.js';
+import { getDoor } from '../../doors.js';
 
 export function executeDoorAction(req, res) {
     if (!req.user) {
@@ -13,32 +14,40 @@ export function executeDoorAction(req, res) {
         action,
     } = req.params;
 
-    const doors = config.doors;
+    const door = getDoor(doorId);
 
-    if (!doors.hasOwnProperty(doorId)) {
-        return res.status(404).end();
+    let controller;
+
+    try {
+        controller = getController(door);
+    }
+    catch (err) {
+        if (err instanceof NotFoundError) {
+            return res.status(404).end();
+        }
+
+        throw err;
     }
 
-    const door = {
-        id: doorId,
-        ...doors[doorId],
-    };
-
-    if (!door.actions.hasOwnProperty(action)) {
-        return res.status(404).end();
-    }
-
-    const actionConditions = door.actions[action];
-
-    if (actionConditions.hasOwnProperty('roles') && !isAuthorised(req.user.roles, actionConditions.roles)) {
+    if (!isAuthorized(req.user, door?.actions?.[action])) {
         return res.status(403).end();
     }
 
     // user is authorized to perform action
-    const controller = getController(doorId);
-    controller.executeAction(action);
+    try {
+        controller.executeAction(action);
+    }
+    catch (err) {
+        if (err instanceof NotFoundError) {
+            return res.status(404).end();
+        }
+        if (err instanceof InvalidInputError) {
+            return res.status(400).end();
+        }
+
+        throw err;
+    }
 
     sendNotification(req.user, door, action);
-
     res.status(204).end();
 }

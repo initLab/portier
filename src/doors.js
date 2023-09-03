@@ -1,8 +1,9 @@
 import { config } from './config.js';
-import { isAuthorised } from './user.js';
+import { isAuthorized } from './user.js';
 import { createDebug } from './debug.js';
 import { addEventListener } from './mqtt/index.js';
 import { getController } from './doorController/index.js';
+import { NotFoundError } from './errors.js';
 
 const debug = createDebug('doors');
 
@@ -11,13 +12,23 @@ const subscriptions = {};
 
 export function init() {
     for (const door of config.doors) {
-        const controller = getController(door.id);
+        const controller = getController(door);
         // TODO
     }
 
     if (Object.keys(subscriptions).length > 0) {
         addEventListener('message', () => {});
     }
+}
+
+export function getDoor(doorId) {
+    const door = config.doors?.[doorId];
+
+    if (!door) {
+        throw new NotFoundError('Door ' + doorId + ' not found in config');
+    }
+
+    return door;
 }
 
 function getStatuses() {
@@ -38,8 +49,8 @@ function setStatus(doorId, statusId, value) {
 
 export const listUserAccessibleDoors = user => config.doors.map(door => ({
     id: door.id,
-    name: door.name[user.locale],
-    supported_actions: Object.entries(door.actions).filter(([_, actionOptions]) =>
-        isAuthorised(user.roles, actionOptions.roles)
+    name: door?.name?.[user.locale],
+    supported_actions: Object.entries(door?.actions || []).filter(([_, actionConditions]) =>
+        isAuthorized(user, actionConditions)
     ).map(([action]) => action),
 })).filter(door => door.supported_actions.length > 0);
