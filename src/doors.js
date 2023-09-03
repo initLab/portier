@@ -22,7 +22,7 @@ export function init() {
 }
 
 export function getDoor(doorId) {
-    const door = config.doors?.[doorId];
+    const door = config.doors.filter(door => door.id === doorId)?.[0];
 
     if (!door) {
         throw new NotFoundError('Door ' + doorId + ' not found in config');
