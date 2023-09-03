@@ -5,15 +5,11 @@ import { addEventListener } from './mqtt/index.js';
 
 const debug = createDebug('doors');
 
-export const doors = Object.entries(config.doors).map(([id, door]) => ({
-    id,
-    ...door,
-}));
 export const statuses = {};
 const subscriptions = {};
 
 export function init() {
-    for (const door of doors) {
+    for (const door of config.doors) {
         switch (door?.controller?.type) {
             case 'mqtt':
                 setupMqttController(door.id, door.controller.options || {});
@@ -55,7 +51,7 @@ function handleMessage(topic, payload, packet) {
 
 }
 
-export const listUserAccessibleDoors = user => doors.map(door => ({
+export const listUserAccessibleDoors = user => config.doors.map(door => ({
     id: door.id,
     name: door.name[user.locale],
     supported_actions: Object.entries(door.actions).filter(([_, actionOptions]) =>
