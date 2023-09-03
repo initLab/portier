@@ -2,28 +2,21 @@ import { config } from './config.js';
 import { isAuthorised } from './user.js';
 import { createDebug } from './debug.js';
 import { addEventListener } from './mqtt/index.js';
+import { getController } from './doorController/index.js';
 
 const debug = createDebug('doors');
 
-export const statuses = {};
+const statuses = {};
 const subscriptions = {};
 
 export function init() {
     for (const door of config.doors) {
-        switch (door?.controller?.type) {
-            case 'mqtt':
-                setupMqttController(door.id, door.controller.options || {});
-                break;
-            case undefined:
-                debug('No controller provided for door', door.id);
-                break;
-            default:
-                throw new Error('Unknown controller type for door ' + door.id + ': ' + door.controller.type);
-        }
+        const controller = getController(door.id);
+        // TODO
     }
 
     if (Object.keys(subscriptions).length > 0) {
-        addEventListener('message', handleMessage);
+        addEventListener('message', () => {});
     }
 }
 
@@ -41,14 +34,6 @@ function setStatus(doorId, statusId, value) {
     }
 
     statuses[doorId][statusId] = value;
-}
-
-function setupMqttController(doorId, options) {
-
-}
-
-function handleMessage(topic, payload, packet) {
-
 }
 
 export const listUserAccessibleDoors = user => config.doors.map(door => ({
