@@ -14,7 +14,18 @@ export function executeDoorAction(req, res) {
         action,
     } = req.params;
 
-    const door = getDoor(doorId);
+    let door;
+
+    try {
+        door = getDoor(doorId);
+    }
+    catch (err) {
+        if (err instanceof NotFoundError) {
+            return res.status(404).end();
+        }
+
+        throw err;
+    }
 
     let controller;
 
