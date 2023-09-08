@@ -1,18 +1,14 @@
 import { config } from './config.js';
 import { isAuthorized } from './user.js';
-import { createDebug } from './debug.js';
 import { addEventListener } from './mqtt/index.js';
-import { getController } from './doorController/index.js';
 import { NotFoundError } from './errors.js';
 
-const debug = createDebug('doors');
-
-const statuses = {};
+//const statuses = {};
 const subscriptions = {};
 
 export function init() {
     for (const door of config.doors) {
-        const controller = getController(door);
+        // const controller = getController(door);
         // TODO
     }
 
@@ -31,6 +27,7 @@ export function getDoor(doorId) {
     return door;
 }
 
+/*
 function getStatuses() {
     return statuses;
 }
@@ -46,6 +43,7 @@ function setStatus(doorId, statusId, value) {
 
     statuses[doorId][statusId] = value;
 }
+*/
 
 export const listUserAccessibleDoors = user => config.doors.map(door => ({
     id: door.id,
