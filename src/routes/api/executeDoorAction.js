@@ -40,7 +40,7 @@ export function executeDoorAction(req, res) {
         throw err;
     }
 
-    if (!isAuthorized(req.user, door?.actions?.[action])) {
+    if (!isAuthorized(req.user, door.actions?.[action])) {
         return res.status(403).end();
     }
 
