@@ -14,6 +14,7 @@ export function sendNotification(user, door, action) {
         door: {
             id: door.id,
             name: door.name,
+            number: door.number,
         },
         action,
         user: {

@@ -50,6 +50,7 @@ function setStatus(doorId, statusId, value) {
 export const listUserAccessibleDoors = user => config.doors.map(door => ({
     id: door.id,
     name: door?.name?.[user.locale],
+    number: door?.number || 0,
     supported_actions: Object.entries(door?.actions || []).filter(([_, actionConditions]) =>
         isAuthorized(user, actionConditions)
     ).map(([action]) => action),

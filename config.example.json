@@ -15,6 +15,7 @@
                 "en": "Example Door",
                 "bg": "Примерна Врата"
             },
+            "number": 1,
             "controller": {
                 "type": "dummy"
             },
@@ -29,6 +30,7 @@
                 "en": "Example Door 2",
                 "bg": "Примерна Врата 2"
             },
+            "number": 2,
             "controller": {
                 "type": "mqtt",
                 "options": {
