@@ -26,6 +26,7 @@ export function sendNotification(user, door, action) {
             github: user.github,
             jabber: user.jabber,
             picture: user.picture,
+            announce_my_presence: user.announce_my_presence,
         },
     };
     const publicMessage = {
