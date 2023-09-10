@@ -5,7 +5,7 @@ import { InvalidInputError, NotFoundError } from '../../errors.js';
 import { getDoor } from '../../doors.js';
 
 export function executeDoorAction(req, res) {
-    if (!req.user) {
+    if (!req.user || !req.tokenInfo.scope.includes('door_control')) {
         return res.status(403).end();
     }
 
