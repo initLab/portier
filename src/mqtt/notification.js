@@ -1,12 +1,17 @@
 import { publish } from './index.js';
 import { config } from '../config.js';
 
-export function sendNotification(user, door, action) {
+export function sendNotification(req, door, action) {
     const notificationConfig = config?.mqtt?.notifications;
 
     if (!notificationConfig) {
         return;
     }
+
+    const {
+        user,
+        tokenInfo,
+    } = req;
 
     const topicSuffix = '/doorAction/' + door.id + '/' + action;
     const privateMessage = {
@@ -28,6 +33,7 @@ export function sendNotification(user, door, action) {
             picture: user.picture,
             announce_my_presence: user.announce_my_presence,
         },
+        application: tokenInfo.application,
     };
     const publicMessage = {
         ...privateMessage,

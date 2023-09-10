@@ -59,6 +59,6 @@ export function executeDoorAction(req, res) {
         throw err;
     }
 
-    sendNotification(req.user, door, action);
+    sendNotification(req, door, action);
     res.status(204).end();
 }
