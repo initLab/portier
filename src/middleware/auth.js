@@ -1,28 +1,29 @@
-import { config } from '../config.js';
+import { fetchResourceOwner, getTokenInfo } from '../oauth2.js';
+import { FetchError } from '../errors.js';
 
 export function auth() {
-    const oauth2Config = config.oauth2;
+    const authorizationType = 'Bearer';
 
     return async function(req, res, next) {
         const authHeader = req.headers?.authorization;
 
-        if (typeof authHeader !== 'string') {
+        if (typeof authHeader !== 'string' || !authHeader.startsWith(authorizationType + ' ')) {
             return next();
         }
 
-        const url = oauth2Config.baseUrl + oauth2Config.resourceOwnerPath;
+        const bearerToken = authHeader.substring(authorizationType.length + 1);
 
-        const userResponse = await fetch(url, {
-            headers: new Headers({
-                Authorization: authHeader,
-            }),
-        });
-
-        if (!userResponse.ok) {
-            return res.status(userResponse.status).end();
+        try {
+            req.tokenInfo = await getTokenInfo(bearerToken);
+            req.user = await fetchResourceOwner(bearerToken);
+            next();
         }
+        catch (ex) {
+            if (ex instanceof FetchError) {
+                return res.status(ex.status).end();
+            }
 
-        req.user = await userResponse.json();
-        next();
+            throw ex;
+        }
     };
 }
