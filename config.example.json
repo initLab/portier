@@ -7,7 +7,8 @@
     },
     "oauth2": {
         "baseUrl": "https://example.com",
-        "resourceOwnerPath": "/user"
+        "resourceOwnerPath": "/user",
+        "tokenInfoPath": "/token-info"
     },
     "doors": {
         "example_door": {
