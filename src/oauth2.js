@@ -12,14 +12,29 @@ export function init() {
     setInterval(cleanupExpiredTokens, 60000);
 }
 
-function isTokenExpired(tokenInfo) {
-    return tokenInfo[expirationPropertyName] < Date.now();
+const maskToken = token => token.substring(0, 8) + '...';
+
+const isTokenExpired = tokenInfo => tokenInfo[expirationPropertyName] < Date.now();
+
+const fetchTokenInfo = async (token) =>
+    authenticatedFetch(oauth2Config.baseUrl + oauth2Config.tokenInfoPath, token);
+
+export const fetchResourceOwner = async (token) =>
+    authenticatedFetch(oauth2Config.baseUrl + oauth2Config.resourceOwnerPath, token);
+
+function deleteToken(token) {
+    debug('Deleting token from cache', maskToken(token));
+    delete tokenCache[token];
 }
 
 function cleanupExpiredTokens() {
-    tokenCache = Object.fromEntries(Object.entries(tokenCache).filter(([_, tokenInfo]) =>
-        !isTokenExpired(tokenInfo)
-    ));
+    const expiredTokens = Object.entries(tokenCache).filter(([_, tokenInfo]) =>
+        isTokenExpired(tokenInfo)
+    ).map(([token]) => token);
+
+    for (const token of expiredTokens) {
+        deleteToken(token);
+    }
 }
 
 async function authenticatedFetch(url, bearerToken) {
@@ -41,32 +56,21 @@ async function authenticatedFetch(url, bearerToken) {
     return response.json();
 }
 
-async function fetchTokenInfo(token) {
-    return authenticatedFetch(oauth2Config.baseUrl + oauth2Config.tokenInfoPath, token);
-}
-
-export async function fetchResourceOwner(token) {
-    return authenticatedFetch(oauth2Config.baseUrl + oauth2Config.resourceOwnerPath, token);
-}
-
 export async function getTokenInfo(token) {
-    const maskedToken = token.substring(0, 8) + '...';
-
     if (tokenCache.hasOwnProperty(token)) {
         const tokenInfo = tokenCache[token];
 
         if (!isTokenExpired(tokenInfo)) {
-            debug('Token info retrieved from cache', maskedToken);
+            debug('Token info retrieved from cache', maskToken(token));
             return tokenInfo;
         }
 
-        debug('Deleting expired token', token);
-        delete tokenCache[token];
+        deleteToken(token);
     }
 
     const tokenInfo = await fetchTokenInfo(token);
 
-    debug('Token info stored in cache', maskedToken);
+    debug('Token info stored in cache', maskToken(token));
 
     return tokenCache[token] = {
         ...tokenInfo,
