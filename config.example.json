@@ -1,4 +1,7 @@
 {
+    "database": {
+        "uri": "sqlite:./data/db.sqlite3"
+    },
     "mqtt": {
         "brokerUrl": "mqtt://example.com",
         "notifications": {

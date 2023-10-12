@@ -3,9 +3,11 @@ import { init as initMqtt } from './mqtt/index.js';
 import { createDebug } from './debug.js';
 import { init as initDoors } from './doors.js';
 import { init as initOAuth2 } from './oauth2.js';
+import { init as initDatabase } from './database/index.js';
 
 const debug = createDebug('index');
 
+await initDatabase();
 initOAuth2();
 initMqtt();
 initDoors();
