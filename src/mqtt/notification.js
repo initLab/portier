@@ -1,7 +1,7 @@
 import { publish } from './index.js';
 import { config } from '../config.js';
 
-export function sendNotification(req, door, action) {
+export async function sendNotification(req, door, action) {
     const notificationConfig = config?.mqtt?.notifications;
 
     if (!notificationConfig) {
@@ -41,10 +41,10 @@ export function sendNotification(req, door, action) {
     };
 
     if (notificationConfig.hasOwnProperty('privateTopic')) {
-        publish(notificationConfig.privateTopic + topicSuffix, JSON.stringify(privateMessage));
+        await publish(notificationConfig.privateTopic + topicSuffix, JSON.stringify(privateMessage));
     }
 
     if (notificationConfig.hasOwnProperty('publicTopic')) {
-        publish(notificationConfig.publicTopic + topicSuffix, JSON.stringify(publicMessage));
+        await publish(notificationConfig.publicTopic + topicSuffix, JSON.stringify(publicMessage));
     }
 }

@@ -4,7 +4,7 @@ import { sendNotification } from '../../mqtt/notification.js';
 import { InvalidInputError, NotFoundError } from '../../errors.js';
 import { getDoor } from '../../doors.js';
 
-export function executeDoorAction(req, res) {
+export async function executeDoorAction(req, res) {
     if (!req.user || !req.tokenInfo.scope.includes('door_control')) {
         return res.status(403).end();
     }
@@ -46,7 +46,7 @@ export function executeDoorAction(req, res) {
 
     // user is authorized to perform action
     try {
-        controller.executeAction(action);
+        await controller.executeAction(action);
     }
     catch (err) {
         if (err instanceof NotFoundError) {
@@ -59,6 +59,6 @@ export function executeDoorAction(req, res) {
         throw err;
     }
 
-    sendNotification(req, door, action);
+    await sendNotification(req, door, action);
     res.status(204).end();
 }

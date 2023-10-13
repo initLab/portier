@@ -34,6 +34,8 @@ export function addEventListener(event, callback) {
     client.on(event, callback);
 }
 
-export function publish(topic, message) {
-    client.publish(topic, message);
+export async function publish(topic, message) {
+    return new Promise((resolve, reject) => client.publish(topic, message, error =>
+        error ? reject(error) : resolve()
+    ));
 }
