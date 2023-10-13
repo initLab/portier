@@ -13,6 +13,7 @@
     "cors": "^2.8.5",
     "debug": "^4.3.4",
     "express": "^4.18.2",
+    "minimist": "^1.2.8",
     "mqtt": "^5.0.2",
     "node-fetch": "^3.3.2",
     "sequelize": "^6.33.0",
