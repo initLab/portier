@@ -50,4 +50,6 @@ export async function init(syncOptions = {}, runSeeder = false) {
 export {
     sequelize,
     ActionLog,
+    Application,
+    User,
 };
