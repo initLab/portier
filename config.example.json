@@ -1,11 +1,13 @@
 {
     "database": {
-        "uri": "sqlite:./data/db.sqlite3"
+        "uri": "sqlite:./data/db.sqlite3",
+        "logActions": true
     },
     "mqtt": {
         "brokerUrl": "mqtt://example.com",
         "notifications": {
-            "topic": "portier/notifications"
+            "privateTopic": "portier/private/notifications",
+            "publicTopic": "portier/public/notifications"
         }
     },
     "oauth2": {
