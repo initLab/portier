@@ -7,6 +7,5 @@ export const ApplicationModel = sequelize => sequelize.define('Application', {
     },
     name: {
         type: DataTypes.STRING,
-        allowNull: false,
     },
 });
