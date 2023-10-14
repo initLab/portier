@@ -15,18 +15,28 @@ export async function logDoorAction(req, door, action) {
         tokenInfo,
     } = req;
 
+    await logDoorActionInternal(userFields, tokenInfo.application, door, action);
+
+    debug('Created new entry');
+}
+
+export async function logDoorActionInternal(userFields, appFields, door, action, ts = null) {
     const user = await createOrUpdateUser(userFields);
 
     const application = await createOrUpdateApplication({
-        id: tokenInfo.application.uid,
+        id: appFields.uid,
     });
+
+    const timestamps = ts ? new Date(ts) : null;
 
     await createActionLog({
         doorId: door.id,
         action,
         UserId: user.id,
         ApplicationId: application.id,
+        ...(timestamps ? {
+            createdAt: timestamps,
+            updatedAt: timestamps,
+        } : {}),
     });
-
-    debug('Created new entry');
 }
