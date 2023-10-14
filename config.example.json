@@ -1,7 +1,6 @@
 {
     "database": {
-        "uri": "sqlite:./data/db.sqlite3",
-        "logActions": true
+        "uri": "sqlite:./data/db.sqlite3"
     },
     "mqtt": {
         "brokerUrl": "mqtt://example.com",
@@ -14,6 +13,9 @@
         "baseUrl": "https://example.com",
         "resourceOwnerPath": "/user",
         "tokenInfoPath": "/token-info"
+    },
+    "actionLogger": {
+        "createLogs": true
     },
     "doors": {
         "example_door": {

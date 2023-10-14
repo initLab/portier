@@ -5,7 +5,7 @@ import { createDebug } from '../debug.js';
 const debug = createDebug('actionLogger');
 
 export async function logDoorAction(req, door, action) {
-    if (!config?.database?.logActions) {
+    if (!config?.actionLogger?.createLogs) {
         debug('Skipped');
         return;
     }
