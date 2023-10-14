@@ -14,4 +14,8 @@ export const getUser = async id => findByPk(User, id);
 export const createOrUpdateUser = async (fields = {}) => upsert(User, fields);
 
 export const createActionLog = async (fields = {}) => ActionLog.create(fields);
-export const getActionLogs = async () => ActionLog.findAll();
+export const getActionLogs = async (offset = null, limit = null) => ActionLog.findAll({
+    order: ['id', 'DESC'],
+    offset,
+    limit,
+});
