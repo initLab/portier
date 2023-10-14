@@ -27,16 +27,15 @@ export async function logDoorActionInternal(userFields, appFields, door, action,
         id: appFields.uid,
     });
 
-    const timestamps = ts ? new Date(ts) : null;
+    const createdAt = ts ? new Date(ts) : null;
 
     await createActionLog({
         doorId: door.id,
         action,
         UserId: user.id,
         ApplicationId: application.id,
-        ...(timestamps ? {
-            createdAt: timestamps,
-            updatedAt: timestamps,
+        ...(createdAt ? {
+            createdAt,
         } : {}),
     });
 }
