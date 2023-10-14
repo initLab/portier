@@ -11,4 +11,5 @@ export const getActionLogs = async (offset = null, limit = null) => ActionLog.fi
     order: [['id', 'DESC']],
     offset,
     limit,
+    include: [Application, User],
 });
