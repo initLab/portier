@@ -3,6 +3,7 @@ import { getController } from '../../doorController/index.js';
 import { sendNotification } from '../../mqtt/notification.js';
 import { InvalidInputError, NotFoundError } from '../../errors.js';
 import { getDoor } from '../../doors.js';
+import { logDoorAction } from '../../database/actionLogger.js';
 
 export async function executeDoorAction(req, res) {
     if (!req.user || !req.tokenInfo.scope.includes('door_control')) {
@@ -59,6 +60,7 @@ export async function executeDoorAction(req, res) {
         throw err;
     }
 
+    await logDoorAction(req, door, action);
     await sendNotification(req, door, action);
     res.status(204).end();
 }
