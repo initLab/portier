@@ -13,6 +13,9 @@ const args = argv._;
 for (const arg of args) {
     const file = await fs.open(arg);
 
+    console.log('Importing from file', arg);
+    let lines = 0;
+
     for await (const line of file.readLines()) {
         const topicIndex = line.indexOf(' ');
 
@@ -41,5 +44,9 @@ for (const arg of args) {
             payload.action,
             payload.ts,
         );
+
+        lines++;
     }
+
+    console.log(lines, 'lines imported');
 }
