@@ -7,7 +7,6 @@ class AppError extends Error {
 
 export class NotFoundError extends AppError {}
 export class InvalidConfigurationError extends AppError {}
-export class InvalidInputError extends AppError {}
 export class FetchError extends AppError {
     constructor(statusText, status) {
         super(statusText);

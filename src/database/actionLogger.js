@@ -1,8 +1,12 @@
 import { createActionLog, createOrUpdateApplication, createOrUpdateUser } from './api.js';
 import { config } from '../config.js';
+import { createDebug } from '../debug.js';
+
+const debug = createDebug('actionLogger');
 
 export async function logDoorAction(req, door, action) {
     if (!config?.database?.logActions) {
+        debug('Skipped');
         return;
     }
 
@@ -23,4 +27,6 @@ export async function logDoorAction(req, door, action) {
         UserId: user.id,
         ApplicationId: application.id,
     });
+
+    debug('Created new entry');
 }

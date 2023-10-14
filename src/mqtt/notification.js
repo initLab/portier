@@ -1,10 +1,14 @@
 import { publish } from './index.js';
 import { config } from '../config.js';
+import { createDebug } from '../debug.js';
+
+const debug = createDebug('mqtt:notification');
 
 export async function sendNotification(req, door, action) {
     const notificationConfig = config?.mqtt?.notifications;
 
     if (!notificationConfig) {
+        debug('Skipped');
         return;
     }
 
@@ -12,6 +16,7 @@ export async function sendNotification(req, door, action) {
     const notifyPublic = notificationConfig.hasOwnProperty('publicTopic');
 
     if (!notifyPrivate && !notifyPublic) {
+        debug('Skipped');
         return;
     }
 
@@ -49,9 +54,11 @@ export async function sendNotification(req, door, action) {
 
     if (notifyPrivate) {
         await publish(notificationConfig.privateTopic + topicSuffix, JSON.stringify(privateMessage));
+        debug('Sent to private topic');
     }
 
     if (notifyPublic) {
         await publish(notificationConfig.publicTopic + topicSuffix, JSON.stringify(publicMessage));
+        debug('Sent to public topic');
     }
 }
