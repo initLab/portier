@@ -8,7 +8,7 @@ export const createOrUpdateUser = async (fields = {}) => upsert(User, fields);
 
 export const createActionLog = async (fields = {}) => ActionLog.create(fields);
 export const getActionLogs = async (offset = null, limit = null) => ActionLog.findAll({
-    order: [['id', 'DESC']],
+    order: [['createdAt', 'DESC']],
     offset,
     limit,
     include: [Application, User],
