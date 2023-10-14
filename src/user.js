@@ -6,8 +6,11 @@ export function isAuthorized(user, actionConditions) {
     let result = false;
 
     if (actionConditions.hasOwnProperty('roles')) {
-        const userRoles = user?.roles || [];
-        result ||= hasOverlappingRoles(userRoles, actionConditions.roles);
+        result ||= hasOverlappingRoles(user?.roles || [], actionConditions.roles);
+    }
+
+    if (actionConditions.hasOwnProperty('usernames')) {
+        result ||= actionConditions.usernames.includes(user?.username || '');
     }
 
     return result;
