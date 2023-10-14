@@ -8,6 +8,13 @@ export async function sendNotification(req, door, action) {
         return;
     }
 
+    const notifyPrivate = notificationConfig.hasOwnProperty('privateTopic');
+    const notifyPublic = notificationConfig.hasOwnProperty('publicTopic');
+
+    if (!notifyPrivate && !notifyPublic) {
+        return;
+    }
+
     const {
         user,
         tokenInfo,
@@ -40,11 +47,11 @@ export async function sendNotification(req, door, action) {
         user: user.announce_my_presence ? privateMessage.user : null,
     };
 
-    if (notificationConfig.hasOwnProperty('privateTopic')) {
+    if (notifyPrivate) {
         await publish(notificationConfig.privateTopic + topicSuffix, JSON.stringify(privateMessage));
     }
 
-    if (notificationConfig.hasOwnProperty('publicTopic')) {
+    if (notifyPublic) {
         await publish(notificationConfig.publicTopic + topicSuffix, JSON.stringify(publicMessage));
     }
 }
