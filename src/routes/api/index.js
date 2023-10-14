@@ -4,6 +4,7 @@ import cors from 'cors';
 import { wrap } from '../../middleware/asyncMiddleware.js';
 import { auth } from '../../middleware/auth.js';
 import { executeDoorAction } from './executeDoorAction.js';
+import { getActionLog } from './getActionLog.js';
 
 export const apiRouter = new Router();
 
@@ -13,3 +14,5 @@ apiRouter.use(wrap(auth()));
 
 apiRouter.get('/doors', getDoors);
 apiRouter.post('/doors/:doorId/:action', executeDoorAction);
+
+apiRouter.get('/actionLog/:offset/:limit', getActionLog);

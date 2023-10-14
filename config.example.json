@@ -15,7 +15,11 @@
         "tokenInfoPath": "/token-info"
     },
     "actionLogger": {
-        "createLogs": true
+        "createLogs": true,
+        "readLogs": {
+            "roles": ["board_member"],
+            "usernames": ["example"]
+        }
     },
     "doors": {
         "example_door": {
