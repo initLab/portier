@@ -1,21 +1,6 @@
 import { config } from './config.js';
 import { isAuthorized } from './user.js';
-import { addEventListener } from './mqtt/index.js';
 import { NotFoundError } from './errors.js';
-
-//const statuses = {};
-const subscriptions = {};
-
-export function init() {
-    for (const door of config.doors) {
-        // const controller = getController(door);
-        // TODO
-    }
-
-    if (Object.keys(subscriptions).length > 0) {
-        addEventListener('message', () => {});
-    }
-}
 
 export function getDoor(doorId) {
     const door = config.doors.filter(door => door.id === doorId)?.[0];
@@ -26,24 +11,6 @@ export function getDoor(doorId) {
 
     return door;
 }
-
-/*
-function getStatuses() {
-    return statuses;
-}
-
-function getStatus(doorId, statusId) {
-    return statuses?.[doorId]?.[statusId];
-}
-
-function setStatus(doorId, statusId, value) {
-    if (!statuses.hasOwnProperty(doorId)) {
-        statuses[doorId] = {};
-    }
-
-    statuses[doorId][statusId] = value;
-}
-*/
 
 export const listUserAccessibleDoors = user => config.doors.map(door => ({
     id: door.id,
