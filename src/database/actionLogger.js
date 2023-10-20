@@ -30,7 +30,7 @@ export async function logDoorActionInternal(userFields, appFields, door, action,
     const createdAt = ts ? new Date(ts) : null;
 
     await createActionLog({
-        doorId: door.id,
+        deviceId: door.id,
         action,
         UserId: user.id,
         ApplicationId: application.id,

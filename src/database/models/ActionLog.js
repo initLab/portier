@@ -5,7 +5,7 @@ export const ActionLogModel = sequelize => sequelize.define('ActionLog', {
         type: DataTypes.INTEGER,
         primaryKey: true,
     },
-    doorId: {
+    deviceId: {
         type: DataTypes.STRING,
         allowNull: false,
     },
