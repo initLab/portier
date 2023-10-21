@@ -21,12 +21,13 @@
             "usernames": ["example"]
         }
     },
-    "doors": {
+    "devices": {
         "example_door": {
             "name": {
                 "en": "Example Door",
                 "bg": "Примерна Врата"
             },
+            "type": "door",
             "number": 1,
             "controller": {
                 "type": "dummy"
@@ -42,6 +43,7 @@
                 "en": "Example Door 2",
                 "bg": "Примерна Врата 2"
             },
+            "type": "door",
             "number": 2,
             "controller": {
                 "type": "mqtt",

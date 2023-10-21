@@ -1,7 +1,7 @@
 import minimist from 'minimist';
 import fs from 'fs/promises';
 import { init as initDatabase } from '../src/database/index.js';
-import { logDoorActionInternal } from '../src/database/actionLogger.js';
+import { logDeviceActionInternal } from '../src/database/actionLogger.js';
 
 const DEFAULT_APP_ID = 'YueB6ct6SKPN8Ar72G0LC1QFxW9meUDQIOHdAu5mfCE';
 
@@ -35,12 +35,12 @@ for (const arg of args) {
         // const topic = line.substring(topicIndex + 1, payloadIndex);
         const payload = JSON.parse(line.substring(payloadIndex + 1));
 
-        await logDoorActionInternal(
+        await logDeviceActionInternal(
             payload.user,
             payload?.application || {
                 uid: DEFAULT_APP_ID,
             },
-            payload.door,
+            payload.device || payload.door,
             payload.action,
             payload.ts,
         );

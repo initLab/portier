@@ -1,8 +1,8 @@
 import config from '../config.json' assert { type: 'json' };
 
-config.doors = Object.entries(config?.doors || []).map(([id, door]) => ({
+config.devices = Object.entries(config?.devices || []).map(([id, device]) => ({
     id,
-    ...door,
+    ...device,
 }));
 
 export { config };

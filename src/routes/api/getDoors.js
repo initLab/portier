@@ -1,4 +1,4 @@
-import { listUserAccessibleDoors } from '../../doors.js';
+import { listUserAccessibleDevices } from '../../devices.js';
 import { createDebug } from '../../debug.js';
 
 const debug = createDebug('getDoors');
@@ -10,5 +10,5 @@ export function getDoors(req, res) {
     }
 
     debug('Successful');
-    res.json(listUserAccessibleDoors(req.user));
+    res.json(listUserAccessibleDevices(req.user, 'door'));
 }

@@ -4,7 +4,7 @@ import { createDebug } from '../debug.js';
 
 const debug = createDebug('actionLogger');
 
-export async function logDoorAction(req, door, action) {
+export async function logDeviceAction(req, device, action) {
     if (!config?.actionLogger?.createLogs) {
         debug('Skipped');
         return;
@@ -15,12 +15,12 @@ export async function logDoorAction(req, door, action) {
         tokenInfo,
     } = req;
 
-    await logDoorActionInternal(userFields, tokenInfo.application, door, action);
+    await logDeviceActionInternal(userFields, tokenInfo.application, device, action);
 
     debug('Created new entry');
 }
 
-export async function logDoorActionInternal(userFields, appFields, door, action, ts = null) {
+export async function logDeviceActionInternal(userFields, appFields, device, action, ts = null) {
     const user = await createOrUpdateUser(userFields);
 
     const application = await createOrUpdateApplication({
@@ -30,7 +30,7 @@ export async function logDoorActionInternal(userFields, appFields, door, action,
     const createdAt = ts ? new Date(ts) : null;
 
     await createActionLog({
-        deviceId: door.id,
+        deviceId: device.id,
         action,
         UserId: user.id,
         ApplicationId: application.id,

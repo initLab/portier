@@ -4,7 +4,7 @@ import { createDebug } from '../debug.js';
 
 const debug = createDebug('mqtt:notification');
 
-export async function sendNotification(req, door, action) {
+export async function sendNotification(req, device, action) {
     const notificationConfig = config?.mqtt?.notifications;
 
     if (!notificationConfig) {
@@ -25,13 +25,14 @@ export async function sendNotification(req, door, action) {
         tokenInfo,
     } = req;
 
-    const topicSuffix = '/doorAction/' + door.id + '/' + action;
+    const topicSuffix = '/deviceAction/' + device.id + '/' + action;
     const privateMessage = {
         ts: Date.now(),
-        door: {
-            id: door.id,
-            name: door.name,
-            number: door.number,
+        device: {
+            id: device.id,
+            name: device.name,
+            type: device.type,
+            number: device.number,
         },
         action,
         user: {
