@@ -2,9 +2,10 @@ import { config } from '../config.js';
 import { InvalidConfigurationError } from '../errors.js';
 import { addTopicHandler, subscribe } from './index.js';
 import { createDebug } from '../debug.js';
+import { pubsub } from '../pubsub/index.js';
 
 const debug = createDebug('mqtt:statuses');
-
+const statusChangedEventName = 'statusChanged';
 const statuses = {};
 
 export function init() {
@@ -129,12 +130,21 @@ function setStatusValue(deviceId, key, value = null) {
         statuses[deviceId] = {};
     }
 
-    if (value === getStatusValue(deviceId, key)) {
-        debug('Skipping', fullKey, 'because it\s already set to', value);
+    const oldValue = getStatusValue(deviceId, key);
+
+    if (value === oldValue) {
+        debug('Skipping', fullKey, 'because it\s already set to', oldValue);
         return;
     }
 
     statuses[deviceId][key] = value;
-    // TODO: publish change notification
+
     debug('Set', fullKey, 'to', value);
+
+    pubsub.emit(statusChangedEventName, {
+        deviceId,
+        key,
+        value,
+        oldValue,
+    });
 }
