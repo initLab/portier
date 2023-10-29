@@ -22,12 +22,7 @@ export function getMqttController(options) {
         await publish(actionParams.topic, actionParams.value);
     }
 
-    function getStatus(statusName) {
-        // TODO
-    }
-
     return {
         executeAction,
-        getStatus,
     };
 }

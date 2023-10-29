@@ -4,6 +4,7 @@ import { createDebug } from './debug.js';
 import { init as initOAuth2 } from './oauth2.js';
 import { init as initDatabase } from './database/index.js';
 import { parseArgs } from './util/argv.js';
+import { init as initStatuses } from './mqtt/statuses.js';
 
 const debug = createDebug('index');
 
@@ -28,6 +29,7 @@ debug('Starting');
 
 initOAuth2();
 initMqtt();
+initStatuses();
 
 const port = process.env.PORT || 3000;
 const host = process.env.HOST || undefined;

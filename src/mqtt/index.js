@@ -4,8 +4,8 @@ import { createDebug } from '../debug.js';
 
 const debug = createDebug('mqtt');
 
-export let client;
-const topics = [];
+let client;
+const topics = new Set();
 
 export function init() {
     debug('Connecting...');
@@ -14,7 +14,9 @@ export function init() {
 
     client.on('connect', function() {
         debug('Connected');
-        client.subscribe(topics);
+        const subscriptionTopics = Array.from(topics);
+        client.subscribe(subscriptionTopics);
+        debug('Subscribed on connect', subscriptionTopics);
     });
 
     client.on('message', function(topic, payload) {
@@ -23,15 +25,22 @@ export function init() {
 }
 
 export function subscribe(topic) {
-    topics.push(topic);
-
-    if (client.connected) {
+    if (client.connected && !topics.has(topic)) {
         client.subscribe(topic);
+        debug('Subscribed after connect', topic);
     }
+
+    topics.add(topic);
 }
 
-export function addEventListener(event, callback) {
-    client.on(event, callback);
+export function addTopicHandler(wantedTopic, callback) {
+    client.on('message', function(receivedTopic, payload, message) {
+        if (receivedTopic !== wantedTopic) {
+            return;
+        }
+
+        callback(payload.toString(), payload, message);
+    });
 }
 
 export async function publish(topic, message) {

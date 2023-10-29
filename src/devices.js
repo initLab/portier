@@ -1,6 +1,7 @@
 import { config } from './config.js';
 import { isAuthorized } from './user.js';
 import { NotFoundError } from './errors.js';
+import { getDeviceStatuses } from './mqtt/statuses.js';
 
 const matchDeviceType = (device, deviceType) => !deviceType || device.type === deviceType;
 
@@ -22,4 +23,7 @@ export const listUserAccessibleDevices = (user, deviceType) => config.devices.ma
     supported_actions: Object.entries(device.actions || []).filter(([_, actionConditions]) =>
         isAuthorized(user, actionConditions)
     ).map(([action]) => action),
-})).filter(device => device.supported_actions.length > 0 && matchDeviceType(device, deviceType));
+})).filter(device => device.supported_actions.length > 0 && matchDeviceType(device, deviceType)).map(device => ({
+    ...device,
+    statuses: getDeviceStatuses(device.id),
+}));
