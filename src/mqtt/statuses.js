@@ -15,11 +15,11 @@ export function init() {
 
         Object.entries(statusConfig).forEach(function ([key, options]) {
             const fullKey = deviceId + '/' + key;
-            const propertyType = options?.type;
+            const inputConfig = options?.input;
+            const outputConfig = options?.output;
 
-            switch (propertyType) {
+            switch (options?.type) {
                 case 'mqtt':
-                    const inputConfig = options?.input;
                     const topic = inputConfig?.topic;
 
                     if (typeof topic === 'undefined') {
@@ -33,7 +33,6 @@ export function init() {
                             inputType);
                     }
 
-                    const outputConfig = options?.output;
                     const outputType = outputConfig?.type;
 
                     if (!['boolean', 'string'].includes(outputType)) {
@@ -64,7 +63,38 @@ export function init() {
                     subscribe(topic);
                     break;
                 case 'lock':
-                    // TODO
+                    const statusLocked = inputConfig?.statusLocked;
+
+                    if (typeof statusLocked === 'undefined') {
+                        throw new InvalidConfigurationError('No statusLocked provided for key ' + fullKey);
+                    }
+
+                    const statusUnlocked = inputConfig?.statusUnlocked;
+
+                    if (typeof statusUnlocked === 'undefined') {
+                        throw new InvalidConfigurationError('No statusUnlocked provided for key ' + fullKey);
+                    }
+
+                    pubsub.on(statusChangedEventName, function({
+                        deviceId: eventDeviceId,
+                        key: eventKey,
+                        oldValue,
+                    }) {
+                        if (eventDeviceId !== deviceId || ![statusLocked, statusUnlocked].includes(eventKey)) {
+                            return;
+                        }
+
+                        const isLocked = getStatusValue(deviceId, statusLocked);
+                        const isUnlocked = getStatusValue(deviceId, statusUnlocked);
+                        const didLockedStatusChange = eventKey === statusLocked;
+                        const calculatedValue = calculateLockStatus(
+                            isLocked, isUnlocked, oldValue, didLockedStatusChange
+                        );
+
+                        if (typeof calculatedValue === 'string') {
+                            setStatusValue(deviceId, key, calculatedValue);
+                        }
+                    });
                     break;
             }
 
@@ -113,6 +143,31 @@ function mapValue(value, outputConfig) {
         default:
             return null;
     }
+}
+
+function calculateLockStatus(isLocked, isUnlocked, oldValue, didLockedStatusChange) {
+    if (typeof isLocked !== 'boolean' || typeof isUnlocked !== 'boolean') {
+        return 'unknown';
+    }
+
+    if (isLocked && isUnlocked) {
+        return 'invalid';
+    }
+
+    if (isLocked && !isUnlocked) {
+        return 'locked';
+    }
+
+    if (!isLocked && isUnlocked) {
+        return 'unlocked';
+    }
+
+    if (oldValue !== true) {
+        // repeated calling with no actual change
+        return null;
+    }
+
+    return didLockedStatusChange ? 'unlocking' : 'locking';
 }
 
 export function getDeviceStatuses(deviceId) {
