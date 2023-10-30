@@ -3,7 +3,7 @@ import { getDevice } from '../device/index.js';
 
 export function sendNotification(deviceId, key, value, oldValue) {
     const device = getDevice(deviceId);
-    const topicSuffix = '/deviceStatus/' + device.id + '/' + key;
+    const topicSuffix = '/device/' + device.id + '/status/' + key;
     const publicMessage = {
         ts: Date.now(),
         device: {
