@@ -54,7 +54,7 @@ export async function executeDeviceAction(req, res) {
 
     // user is authorized to perform action
     try {
-        await controller.executeAction(action);
+        controller.executeAction(action);
     }
     catch (err) {
         if (err instanceof NotFoundError) {
@@ -72,7 +72,7 @@ export async function executeDeviceAction(req, res) {
     debug('Action', action, 'on device', device.id, 'successful');
 
     await logDeviceAction(req, device, action);
-    await sendNotification(req, device, action);
+    sendNotification(req, device, action);
 
     res.status(204).end();
 }

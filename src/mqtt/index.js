@@ -43,11 +43,25 @@ export function addTopicHandler(wantedTopic, callback) {
     });
 }
 
-export async function publish(topic, message) {
+function encodeMessage(message) {
     const messageType = typeof message;
-    const encodedMessage = messageType === 'string' || (
+    return messageType === 'string' || (
         messageType === 'object' && message.constructor.name === 'Buffer'
     ) ? message : JSON.stringify(message);
+}
+
+export function publish(topic, message) {
+    const encodedMessage = encodeMessage(message);
+
+    client.publish(topic, encodedMessage, function(error) {
+        if (error) {
+            throw error;
+        }
+    });
+}
+
+export async function publishAsync(topic, message) {
+    const encodedMessage = encodeMessage(message);
 
     return new Promise((resolve, reject) => client.publish(topic, encodedMessage, error =>
         error ? reject(error) : resolve()

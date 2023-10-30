@@ -2,7 +2,7 @@ import { publish } from '../../mqtt/index.js';
 import { InvalidConfigurationError, NotFoundError } from '../../errors.js';
 
 export function getMqttController(options) {
-    async function executeAction(actionName) {
+    function executeAction(actionName) {
         if (!options.hasOwnProperty('actions')) {
             throw new InvalidConfigurationError('No actions defined in MQTT controller options');
         }
@@ -19,7 +19,7 @@ export function getMqttController(options) {
             }
         }
 
-        await publish(actionParams.topic, actionParams.value);
+        publish(actionParams.topic, actionParams.value);
     }
 
     return {

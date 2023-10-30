@@ -4,6 +4,7 @@ import { createDebug } from '../util/debug.js';
 import { pubsub } from '../pubsub/index.js';
 import { initStatus as initMqttStatus } from './mqtt.js';
 import { initStatus as initLockStatus } from './lock.js';
+import { sendNotification } from './notification.js';
 
 const debug = createDebug('status');
 export const statusChangedEventName = 'statusChanged';
@@ -118,4 +119,6 @@ function setStatusValue(deviceId, key, value = null) {
         value,
         oldValue,
     });
+
+    sendNotification(deviceId, key, value, oldValue);
 }
