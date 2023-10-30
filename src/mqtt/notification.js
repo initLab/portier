@@ -4,7 +4,7 @@ import { createDebug } from '../util/debug.js';
 
 const debug = createDebug('mqtt:notification');
 
-export function send(topicSuffix, publicMessage, privateMessage) {
+export function send(topicSuffix, publicMessage, privateMessage, retain = false) {
     const notificationConfig = config?.mqtt?.notifications;
 
     if (!notificationConfig) {
@@ -20,15 +20,19 @@ export function send(topicSuffix, publicMessage, privateMessage) {
         return;
     }
 
+    const opts = {
+        retain,
+    };
+
     if (notifyPrivate && privateMessage) {
         const privateTopic = notificationConfig.privateTopic + topicSuffix;
-        publish(privateTopic, privateMessage);
+        publish(privateTopic, privateMessage, opts);
         debug('Sent to private topic', privateTopic);
     }
 
     if (notifyPublic && publicMessage) {
         const publicTopic = notificationConfig.publicTopic + topicSuffix;
-        publish(publicTopic, publicMessage);
+        publish(publicTopic, publicMessage, opts);
         debug('Sent to public topic', publicTopic);
     }
 }
