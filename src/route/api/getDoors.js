@@ -1,7 +1,7 @@
-import { listUserAccessibleDevices } from '../../devices.js';
-import { createDebug } from '../../debug.js';
+import { listUserAccessibleDevices } from '../../device/index.js';
+import { createDebug } from '../../util/debug.js';
 
-const debug = createDebug('getDoors');
+const debug = createDebug('route:api:getDoors');
 
 export function getDoors(req, res) {
     if (!req.user) {

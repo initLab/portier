@@ -1,4 +1,4 @@
-import { createDebug } from '../debug.js';
+import { createDebug } from '../util/debug.js';
 import { Sequelize } from 'sequelize';
 import { ApplicationModel } from './models/Application.js';
 import { UserModel } from './models/User.js';

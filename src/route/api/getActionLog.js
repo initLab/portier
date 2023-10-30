@@ -1,9 +1,9 @@
 import { isAuthorized } from '../../user.js';
-import { createDebug } from '../../debug.js';
+import { createDebug } from '../../util/debug.js';
 import { config } from '../../config.js';
 import { getActionLogs } from '../../database/api.js';
 
-const debug = createDebug('getActionLog');
+const debug = createDebug('route:api:getActionLog');
 
 export async function getActionLog(req, res) {
     if (!req.user) {

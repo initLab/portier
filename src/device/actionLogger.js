@@ -1,8 +1,8 @@
-import { createActionLog, createOrUpdateApplication, createOrUpdateUser } from './api.js';
+import { createActionLog, createOrUpdateApplication, createOrUpdateUser } from '../database/api.js';
 import { config } from '../config.js';
-import { createDebug } from '../debug.js';
+import { createDebug } from '../util/debug.js';
 
-const debug = createDebug('actionLogger');
+const debug = createDebug('device:actionLogger');
 
 export async function logDeviceAction(req, device, action) {
     if (!config?.actionLogger?.createLogs) {

@@ -1,7 +1,7 @@
 import minimist from 'minimist';
 import fs from 'fs/promises';
 import { init as initDatabase } from '../src/database/index.js';
-import { logDeviceActionInternal } from '../src/database/actionLogger.js';
+import { logDeviceActionInternal } from '../src/device/actionLogger.js';
 
 const DEFAULT_APP_ID = 'YueB6ct6SKPN8Ar72G0LC1QFxW9meUDQIOHdAu5mfCE';
 

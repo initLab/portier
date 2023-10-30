@@ -1,7 +1,7 @@
-import { config } from './config.js';
-import { isAuthorized } from './user.js';
-import { NotFoundError } from './errors.js';
-import { getDeviceStatuses } from './statuses/index.js';
+import { config } from '../config.js';
+import { isAuthorized } from '../user.js';
+import { NotFoundError } from '../errors.js';
+import { getDeviceStatuses } from '../status/index.js';
 
 const matchDeviceType = (device, deviceType) => !deviceType || device.type === deviceType;
 

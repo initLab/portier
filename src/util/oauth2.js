@@ -1,12 +1,12 @@
-import { config } from './config.js';
-import { FetchError } from './errors.js';
+import { config } from '../config.js';
+import { FetchError } from '../errors.js';
 import { createDebug } from './debug.js';
 
 let tokenCache = {};
 const oauth2Config = config.oauth2;
 const expirationPropertyName = 'expires_at';
 
-const debug = createDebug('oauth2');
+const debug = createDebug('util:oauth2');
 
 export function init() {
     setInterval(cleanupExpiredTokens, 60000);

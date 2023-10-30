@@ -1,5 +1,5 @@
-import { publish } from '../mqtt/index.js';
-import { InvalidConfigurationError, NotFoundError } from '../errors.js';
+import { publish } from '../../mqtt/index.js';
+import { InvalidConfigurationError, NotFoundError } from '../../errors.js';
 
 export function getMqttController(options) {
     async function executeAction(actionName) {

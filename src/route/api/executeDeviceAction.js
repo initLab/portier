@@ -1,12 +1,12 @@
 import { isAuthorized } from '../../user.js';
-import { getController } from '../../deviceController/index.js';
-import { sendNotification } from '../../mqtt/notification.js';
+import { getController } from '../../device/controller/index.js';
+import { sendNotification } from '../../device/notification.js';
 import { InvalidConfigurationError, NotFoundError } from '../../errors.js';
-import { getDevice } from '../../devices.js';
-import { logDeviceAction } from '../../database/actionLogger.js';
-import { createDebug } from '../../debug.js';
+import { getDevice } from '../../device/index.js';
+import { logDeviceAction } from '../../device/actionLogger.js';
+import { createDebug } from '../../util/debug.js';
 
-const debug = createDebug('executeDeviceAction');
+const debug = createDebug('route:api:executeDeviceAction');
 
 export async function executeDeviceAction(req, res) {
     if (!req.user) {

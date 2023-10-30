@@ -1,5 +1,5 @@
 import { getMqttController } from './mqtt.js';
-import { InvalidConfigurationError } from '../errors.js';
+import { InvalidConfigurationError } from '../../errors.js';
 
 export function getController(device) {
     const controller = device.controller;

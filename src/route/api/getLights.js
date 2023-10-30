@@ -1,7 +1,7 @@
-import { listUserAccessibleDevices } from '../../devices.js';
-import { createDebug } from '../../debug.js';
+import { listUserAccessibleDevices } from '../../device/index.js';
+import { createDebug } from '../../util/debug.js';
 
-const debug = createDebug('getLights');
+const debug = createDebug('route:api:getLights');
 
 export function getLights(req, res) {
     if (!req.user) {

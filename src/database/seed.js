@@ -1,4 +1,4 @@
-import { createDebug } from '../debug.js';
+import { createDebug } from '../util/debug.js';
 import { createOrUpdateApplication } from './api.js';
 
 const debug = createDebug('database:seed');

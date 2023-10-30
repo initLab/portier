@@ -1,8 +1,8 @@
 import Router, { json } from 'express';
 import { getDoors } from './getDoors.js';
 import cors from 'cors';
-import { wrap } from '../../middleware/asyncMiddleware.js';
-import { auth } from '../../middleware/auth.js';
+import { wrap } from '../middleware/asyncMiddleware.js';
+import { auth } from '../middleware/auth.js';
 import { executeDeviceAction } from './executeDeviceAction.js';
 import { executeDoorAction } from './executeDoorAction.js';
 import { getActionLog } from './getActionLog.js';

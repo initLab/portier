@@ -1,8 +1,8 @@
-import { publish } from './index.js';
+import { publish } from '../mqtt/index.js';
 import { config } from '../config.js';
-import { createDebug } from '../debug.js';
+import { createDebug } from '../util/debug.js';
 
-const debug = createDebug('mqtt:notification');
+const debug = createDebug('device:notification');
 
 export async function sendNotification(req, device, action) {
     const notificationConfig = config?.mqtt?.notifications;

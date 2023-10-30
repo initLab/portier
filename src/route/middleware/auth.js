@@ -1,5 +1,5 @@
-import { fetchResourceOwner, getTokenInfo } from '../oauth2.js';
-import { FetchError } from '../errors.js';
+import { fetchResourceOwner, getTokenInfo } from '../../util/oauth2.js';
+import { FetchError } from '../../errors.js';
 
 export function auth() {
     const authorizationType = 'Bearer';

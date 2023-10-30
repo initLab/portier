@@ -1,11 +1,11 @@
 import { config } from '../config.js';
 import { InvalidConfigurationError } from '../errors.js';
-import { createDebug } from '../debug.js';
+import { createDebug } from '../util/debug.js';
 import { pubsub } from '../pubsub/index.js';
 import { initStatus as initMqttStatus } from './mqtt.js';
 import { initStatus as initLockStatus } from './lock.js';
 
-const debug = createDebug('statuses');
+const debug = createDebug('status');
 export const statusChangedEventName = 'statusChanged';
 const statuses = {};
 
