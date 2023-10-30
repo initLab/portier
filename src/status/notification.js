@@ -17,5 +17,5 @@ export function sendNotification(deviceId, key, value, oldValue) {
         oldValue
     };
 
-    send(topicSuffix, publicMessage);
+    send(topicSuffix, publicMessage, null, true);
 }
