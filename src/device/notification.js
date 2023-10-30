@@ -54,12 +54,12 @@ export async function sendNotification(req, device, action) {
     };
 
     if (notifyPrivate) {
-        await publish(notificationConfig.privateTopic + topicSuffix, JSON.stringify(privateMessage));
+        await publish(notificationConfig.privateTopic + topicSuffix, privateMessage);
         debug('Sent to private topic');
     }
 
     if (notifyPublic) {
-        await publish(notificationConfig.publicTopic + topicSuffix, JSON.stringify(publicMessage));
+        await publish(notificationConfig.publicTopic + topicSuffix, publicMessage);
         debug('Sent to public topic');
     }
 }

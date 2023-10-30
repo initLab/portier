@@ -44,7 +44,12 @@ export function addTopicHandler(wantedTopic, callback) {
 }
 
 export async function publish(topic, message) {
-    return new Promise((resolve, reject) => client.publish(topic, message, error =>
+    const messageType = typeof message;
+    const encodedMessage = messageType === 'string' || (
+        messageType === 'object' && message.constructor.name === 'Buffer'
+    ) ? message : JSON.stringify(message);
+
+    return new Promise((resolve, reject) => client.publish(topic, encodedMessage, error =>
         error ? reject(error) : resolve()
     ));
 }
