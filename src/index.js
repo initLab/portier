@@ -4,7 +4,7 @@ import { createDebug } from './debug.js';
 import { init as initOAuth2 } from './oauth2.js';
 import { init as initDatabase } from './database/index.js';
 import { parseArgs } from './util/argv.js';
-import { init as initStatuses } from './mqtt/statuses.js';
+import { init as initStatuses } from './statuses/index.js';
 
 const debug = createDebug('index');
 

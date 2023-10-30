@@ -1,7 +1,7 @@
 import { config } from './config.js';
 import { isAuthorized } from './user.js';
 import { NotFoundError } from './errors.js';
-import { getDeviceStatuses } from './mqtt/statuses.js';
+import { getDeviceStatuses } from './statuses/index.js';
 
 const matchDeviceType = (device, deviceType) => !deviceType || device.type === deviceType;
 
