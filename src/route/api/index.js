@@ -8,6 +8,7 @@ import { executeDoorAction } from './executeDoorAction.js';
 import { getActionLog } from './getActionLog.js';
 import { getLights } from './getLights.js';
 import { getDevices } from './getDevices.js';
+import { getDevicesStatus } from './getDevicesStatus.js';
 
 export const apiRouter = new Router();
 
@@ -16,6 +17,7 @@ apiRouter.use(cors());
 apiRouter.use(wrap(auth()));
 
 apiRouter.get('/devices', getDevices);
+apiRouter.get('/devices/status', getDevicesStatus);
 apiRouter.get('/doors', getDoors);
 apiRouter.get('/lights', getLights);
 
