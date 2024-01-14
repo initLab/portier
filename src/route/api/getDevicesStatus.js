@@ -6,7 +6,7 @@ const debug = createDebug('route:api:getDeviceStatuses');
 
 export function getDevicesStatus(req, res) {
     debug('Successful');
-    res.json(config.devices.map(device => ({
+    res.json(config.devices.filter(device => !!device.public).map(device => ({
         id: device.id,
         statuses: getDeviceStatuses(device.id),
     })).filter(device =>
