@@ -15,6 +15,7 @@ export function sendNotification(req, device, action) {
             name: device.name,
             type: device.type,
             number: device.number,
+            public: !!device.public,
         },
         action,
         user: {

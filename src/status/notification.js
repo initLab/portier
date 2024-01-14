@@ -15,6 +15,7 @@ export function sendNotification(deviceId, key, value, oldValue) {
             name: device.name,
             type: device.type,
             number: device.number,
+            public: !!device.public,
         },
         statusKey: key,
         value,

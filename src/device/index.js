@@ -20,6 +20,7 @@ export const listUserAccessibleDevices = (user, deviceType) => config.devices.ma
     name: device.name?.[user.locale],
     type: device.type || 'unknown',
     number: device.number || 0,
+    public: !!device.public,
     supported_actions: Object.entries(device.actions || []).filter(([_, actionConditions]) =>
         isAuthorized(user, actionConditions)
     ).map(([action]) => action),
