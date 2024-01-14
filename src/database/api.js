@@ -2,6 +2,9 @@ import { ActionLog, Application, User } from './index.js';
 
 const upsert = async (entity, fields) => (await entity.upsert(fields))[0];
 
+export const getApplication = async id => Application.findByPk(id, {
+    rejectOnEmpty: true,
+});
 export const createOrUpdateApplication = async (fields = {}) => upsert(Application, fields);
 
 export const createOrUpdateUser = async (fields = {}) => upsert(User, fields);

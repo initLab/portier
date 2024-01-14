@@ -24,7 +24,7 @@ export async function logDeviceActionInternal(userFields, appFields, device, act
     const user = await createOrUpdateUser(userFields);
 
     const application = await createOrUpdateApplication({
-        id: appFields.uid,
+        id: appFields.id,
     });
 
     const createdAt = ts ? new Date(ts) : null;

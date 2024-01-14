@@ -38,7 +38,7 @@ for (const arg of args) {
         await logDeviceActionInternal(
             payload.user,
             payload?.application || {
-                uid: DEFAULT_APP_ID,
+                id: DEFAULT_APP_ID,
             },
             payload.device || payload.door,
             payload.action,

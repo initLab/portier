@@ -1,6 +1,7 @@
 import { config } from '../config.js';
 import { FetchError } from '../errors.js';
 import { createDebug } from './debug.js';
+import { getApplication } from '../database/api.js';
 
 let tokenCache = {};
 const oauth2Config = config.oauth2;
@@ -71,6 +72,17 @@ export async function getTokenInfo(token) {
     const tokenInfo = await fetchTokenInfo(token);
 
     debug('Token info stored in cache', maskToken(token));
+
+    const applicationId = tokenInfo.application.uid;
+
+    tokenInfo.application = {
+        id: applicationId,
+    };
+
+    try {
+        tokenInfo.application = (await getApplication(applicationId)).toJSON();
+    }
+    catch {}
 
     return tokenCache[token] = {
         ...tokenInfo,

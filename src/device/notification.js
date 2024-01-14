@@ -7,6 +7,7 @@ export function sendNotification(req, device, action) {
     } = req;
 
     const topicSuffix = '/device/' + device.id + '/action/' + action;
+    const application = tokenInfo.application;
     const privateMessage = {
         ts: Date.now(),
         device: {
@@ -27,7 +28,10 @@ export function sendNotification(req, device, action) {
             picture: user.picture,
             announce_my_presence: user.announce_my_presence,
         },
-        application: tokenInfo.application,
+        application: {
+            id: application.id,
+            name: application.name,
+        },
     };
     const publicMessage = {
         ...privateMessage,
