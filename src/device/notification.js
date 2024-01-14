@@ -21,12 +21,7 @@ export function sendNotification(req, device, action) {
         user: {
             id: user.id,
             name: user.name,
-            url: user.url,
-            twitter: user.twitter,
             username: user.username,
-            github: user.github,
-            jabber: user.jabber,
-            picture: user.picture,
             announce_my_presence: user.announce_my_presence,
         },
         application: {
