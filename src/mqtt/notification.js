@@ -8,7 +8,7 @@ export function send(topicSuffix, publicMessage, privateMessage, retain = false)
     const notificationConfig = config?.mqtt?.notifications;
 
     if (!notificationConfig) {
-        debug('Skipped');
+        debug('Skipped, no notification config');
         return;
     }
 
@@ -16,7 +16,7 @@ export function send(topicSuffix, publicMessage, privateMessage, retain = false)
     const notifyPublic = notificationConfig.hasOwnProperty('publicTopic');
 
     if (!notifyPrivate && !notifyPublic) {
-        debug('Skipped');
+        debug('Skipped, no topics in notification config');
         return;
     }
 
