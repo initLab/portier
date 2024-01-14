@@ -2,9 +2,13 @@ import { send } from '../mqtt/notification.js';
 import { getDevice } from '../device/index.js';
 
 export function sendNotification(deviceId, key, value, oldValue) {
+    if (value === null) {
+        return;
+    }
+
     const device = getDevice(deviceId);
     const topicSuffix = '/device/' + device.id + '/status/' + key;
-    const publicMessage = {
+    const privateMessage = {
         ts: Date.now(),
         device: {
             id: device.id,
@@ -17,9 +21,5 @@ export function sendNotification(deviceId, key, value, oldValue) {
         oldValue
     };
 
-    if (value === null) {
-        return;
-    }
-
-    send(topicSuffix, publicMessage, null, true);
+    send(topicSuffix, !!device.public ? privateMessage : null, privateMessage, true);
 }
