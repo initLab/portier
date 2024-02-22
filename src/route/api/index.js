@@ -2,7 +2,7 @@ import Router, { json } from 'express';
 import { getDoors } from './getDoors.js';
 import cors from 'cors';
 import { wrap } from '../middleware/asyncMiddleware.js';
-import { auth } from '../middleware/auth.js';
+import { bearerAuth } from '../middleware/bearerAuth.js';
 import { executeDeviceAction } from './executeDeviceAction.js';
 import { executeDoorAction } from './executeDoorAction.js';
 import { getActionLog } from './getActionLog.js';
@@ -14,7 +14,7 @@ export const apiRouter = new Router();
 
 apiRouter.use(json());
 apiRouter.use(cors());
-apiRouter.use(wrap(auth()));
+apiRouter.use(wrap(bearerAuth()));
 
 apiRouter.get('/devices', getDevices);
 apiRouter.get('/devices/status', getDevicesStatus);

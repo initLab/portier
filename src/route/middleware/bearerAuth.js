@@ -1,7 +1,7 @@
 import { fetchResourceOwner, getTokenInfo } from '../../util/oauth2.js';
 import { FetchError } from '../../errors.js';
 
-export function auth() {
+export function bearerAuth() {
     const authorizationType = 'Bearer';
 
     return async function(req, res, next) {
