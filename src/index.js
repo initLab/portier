@@ -5,6 +5,7 @@ import { init as initOAuth2 } from './util/oauth2.js';
 import { init as initDatabase } from './database/index.js';
 import { parseArgs } from './util/argv.js';
 import { init as initStatuses } from './status/index.js';
+import { init as initPrometheus } from './prometheus/index.js';
 
 const debug = createDebug('index');
 
@@ -27,6 +28,7 @@ if (dbOnly) {
 
 debug('Starting');
 
+initPrometheus();
 initOAuth2();
 initMqtt();
 initStatuses();
