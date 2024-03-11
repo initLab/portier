@@ -105,7 +105,7 @@ function setStatusValue(deviceId, key, value = null) {
     const oldValue = getStatusValue(deviceId, key);
 
     if (value === oldValue) {
-        debug('Skipping', fullKey, 'because it\s already set to', oldValue);
+        debug('Skipping', fullKey, 'because it\'s already set to', oldValue);
         return;
     }
 
