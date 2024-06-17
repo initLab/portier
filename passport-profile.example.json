@@ -1,0 +1,7 @@
+{
+  "type": "application",
+  "keyId": "123456",
+  "key": "-----BEGIN RSA PRIVATE KEY-----\nthis-is-not-a-valid-key\n-----END RSA PRIVATE KEY-----\n",
+  "appId": "7878",
+  "clientId": "909090@example"
+}
