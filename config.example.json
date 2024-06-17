@@ -14,6 +14,19 @@
         "resourceOwnerPath": "/user",
         "tokenInfoPath": "/token-info"
     },
+    "passport": {
+        "authority": "https://YOUR_ZITADEL_INSTANCE_NAME.zitadel.cloud",
+        "authorization": {
+            "type": "jwt-profile",
+            "profile": {
+                "type": "application",
+                "keyId": "key id",
+                "key": "private rsa key",
+                "appId": "app id",
+                "clientId": "client id"
+            }
+        }
+    },
     "actionLogger": {
         "createLogs": true,
         "readLogs": {
