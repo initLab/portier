@@ -4,9 +4,10 @@ function hasOverlappingRoles(userRoles, resourceRoles) {
 
 export function isAuthorized(user, actionConditions) {
     let result = false;
+    const userRoles = Object.keys(user?.['urn:zitadel:iam:org:project:roles'] || {});
 
     if (Object.hasOwn(actionConditions, 'roles')) {
-        result ||= hasOverlappingRoles(user?.roles || [], actionConditions.roles);
+        result ||= hasOverlappingRoles(userRoles, actionConditions.roles);
     }
 
     if (Object.hasOwn(actionConditions, 'usernames')) {

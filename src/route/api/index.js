@@ -1,19 +1,18 @@
 import Router, { json } from 'express';
 import { getDoors } from './getDoors.js';
 import cors from 'cors';
-import { wrap } from '../middleware/asyncMiddleware.js';
-import { bearerAuth } from '../middleware/bearerAuth.js';
 import { executeDeviceAction } from './executeDeviceAction.js';
 import { executeDoorAction } from './executeDoorAction.js';
 import { getActionLog } from './getActionLog.js';
 import { getLights } from './getLights.js';
 import { getDevices } from './getDevices.js';
+import { middleware as passportMiddleware } from '../../passport.js';
 
 export const apiRouter = new Router();
 
-apiRouter.use(json());
 apiRouter.use(cors());
-apiRouter.use(wrap(bearerAuth()));
+apiRouter.use(passportMiddleware());
+apiRouter.use(json());
 
 apiRouter.get('/devices', getDevices);
 apiRouter.get('/doors', getDoors);
@@ -25,3 +24,4 @@ apiRouter.post('/device/:deviceId/:action', executeDeviceAction);
 apiRouter.post('/doors/:doorId/:action', executeDoorAction);
 
 apiRouter.get('/actionLog/:offset/:limit', getActionLog);
+

@@ -9,11 +9,6 @@ import { createDebug } from '../../util/debug.js';
 const debug = createDebug('route:api:executeDeviceAction');
 
 export async function executeDeviceAction(req, res) {
-    if (!req.user) {
-        debug('Unauthenticated');
-        return res.status(403).end();
-    }
-
     const {
         deviceId,
         action,

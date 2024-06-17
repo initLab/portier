@@ -9,11 +9,6 @@
             "publicTopic": "portier/public/notifications"
         }
     },
-    "oauth2": {
-        "baseUrl": "https://example.com",
-        "resourceOwnerPath": "/user",
-        "tokenInfoPath": "/token-info"
-    },
     "passport": {
         "authority": "https://YOUR_ZITADEL_INSTANCE_NAME.zitadel.cloud",
         "authorization": {
