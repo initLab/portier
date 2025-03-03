@@ -6,7 +6,8 @@
   "author": "Vencislav Atanasov <git@6bez10.info>",
   "license": "MIT",
   "scripts": {
-    "start": "node src/index.js"
+    "start": "node src/index.js",
+    "lint": "eslint ."
   },
   "type": "module",
   "dependencies": {
