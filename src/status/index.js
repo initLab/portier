@@ -5,6 +5,7 @@ import { pubsub } from '../pubsub/index.js';
 import { initStatus as initMqttStatus } from './mqtt.js';
 import { initStatus as initLockStatus } from './lock.js';
 import { sendNotification } from './notification.js';
+import { getJsonPath } from '../util/json.js';
 
 const debug = createDebug('status');
 export const statusChangedEventName = 'statusChanged';
@@ -40,19 +41,11 @@ export function parseValue(value, inputConfig) {
         case 'literal':
             return value;
         case 'json':
-            if (!inputConfig.hasOwnProperty('jsonPath')) {
+            if (!Object.hasOwn(inputConfig, 'jsonPath')) {
                 return null;
             }
 
-            const decoded = JSON.parse(value);
-            let path = inputConfig.jsonPath.split('.');
-            let result = decoded;
-
-            while (path.length > 0) {
-                result = result?.[path.shift()];
-            }
-
-            return result;
+            return getJsonPath(value, inputConfig.jsonPath);
         default:
             return null;
     }
@@ -98,7 +91,7 @@ export function mapAndSetValue(deviceId, key, value, outputConfig) {
 function setStatusValue(deviceId, key, value = null) {
     const fullKey = deviceId + '.' + key;
 
-    if (!statuses.hasOwnProperty(deviceId)) {
+    if (!Object.hasOwn(statuses, deviceId)) {
         statuses[deviceId] = {};
     }
 

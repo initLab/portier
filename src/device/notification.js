@@ -34,5 +34,5 @@ export function sendNotification(req, device, action) {
         user: user.announce_my_presence ? privateMessage.user : null,
     };
 
-    send(topicSuffix, !!device.public ? publicMessage : null, privateMessage);
+    send(topicSuffix, device.public ? publicMessage : null, privateMessage);
 }

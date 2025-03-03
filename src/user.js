@@ -5,12 +5,12 @@ function hasOverlappingRoles(userRoles, resourceRoles) {
 export function isAuthorized(user, actionConditions) {
     let result = false;
 
-    if (actionConditions.hasOwnProperty('roles')) {
+    if (Object.hasOwn(actionConditions, 'roles')) {
         result ||= hasOverlappingRoles(user?.roles || [], actionConditions.roles);
     }
 
-    if (actionConditions.hasOwnProperty('usernames')) {
-        result ||= actionConditions.usernames.includes(user?.username || '');
+    if (Object.hasOwn(actionConditions, 'usernames')) {
+        result ||= actionConditions.usernames.includes(user?.username ?? '');
     }
 
     return result;

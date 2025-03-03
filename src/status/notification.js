@@ -22,5 +22,5 @@ export function sendNotification(deviceId, key, value, oldValue) {
         oldValue
     };
 
-    send(topicSuffix, !!device.public ? privateMessage : null, privateMessage, true);
+    send(topicSuffix, device.public ? privateMessage : null, privateMessage, true);
 }

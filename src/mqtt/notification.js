@@ -12,8 +12,8 @@ export function send(topicSuffix, publicMessage, privateMessage, retain = false)
         return;
     }
 
-    const notifyPrivate = notificationConfig.hasOwnProperty('privateTopic');
-    const notifyPublic = notificationConfig.hasOwnProperty('publicTopic');
+    const notifyPrivate = Object.hasOwn(notificationConfig, 'privateTopic');
+    const notifyPublic = Object.hasOwn(notificationConfig, 'publicTopic');
 
     if (!notifyPrivate && !notifyPublic) {
         debug('Skipped, no topics in notification config');
