@@ -18,10 +18,10 @@ export function getDevice(deviceId, deviceType) {
 export const listUserAccessibleDevices = (user, deviceType) => config.devices.map(device => ({
     id: device.id,
     name: device.name?.[user.locale],
-    type: device.type || 'unknown',
-    number: device.number || 0,
+    type: device?.type ?? 'unknown',
+    number: device?.number ?? 0,
     public: !!device.public,
-    supported_actions: Object.entries(device.actions || []).filter(([_, actionConditions]) =>
+    supported_actions: Object.entries(device?.actions ?? []).filter(([, actionConditions]) =>
         isAuthorized(user, actionConditions)
     ).map(([action]) => action),
 })).filter(device => device.supported_actions.length > 0 && matchDeviceType(device, deviceType)).map(device => ({

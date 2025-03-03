@@ -11,7 +11,7 @@ export async function getActionLog(req, res) {
         return res.status(403).end();
     }
 
-    if (!isAuthorized(req.user, config?.actionLogger?.readLogs || {})) {
+    if (!isAuthorized(req.user, config?.actionLogger?.readLogs ?? {})) {
         debug('Unauthorized');
         return res.status(403).end();
     }

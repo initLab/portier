@@ -89,7 +89,7 @@ function saveTimings(deviceId, newValue) {
         timings.push(newItem);
     }
 
-    const item = newItem || lookupItem;
+    const item = newItem ?? lookupItem;
     const isStart = ['locking', 'unlocking'].includes(newValue);
     const isEnd = ['locked', 'unlocked'].includes(newValue);
 

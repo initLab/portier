@@ -33,8 +33,8 @@ initOAuth2();
 initMqtt();
 initStatuses();
 
-const port = process.env.PORT || 3000;
-const host = process.env.HOST || undefined;
+const port = process.env.PORT ?? 3000;
+const host = process.env.HOST ?? null;
 
 app.listen({
    port,

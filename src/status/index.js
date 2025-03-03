@@ -12,7 +12,7 @@ const statuses = {};
 
 export function init() {
     config.devices.forEach(function (device) {
-        const statusConfig = device?.statuses || {};
+        const statusConfig = device?.statuses ?? {};
         const deviceId = device.id;
 
         Object.entries(statusConfig).forEach(function ([key, options]) {
@@ -78,7 +78,7 @@ export function mapValue(value, outputConfig) {
 }
 
 export function getDeviceStatuses(deviceId) {
-    return statuses?.[deviceId] || {};
+    return statuses?.[deviceId] ?? {};
 }
 
 export function getStatusValue(deviceId, key) {

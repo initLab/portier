@@ -10,7 +10,7 @@ const topics = new Set();
 export function init() {
     debug('Connecting...');
 
-    client = mqtt.connect(config.mqtt.brokerUrl, config.mqtt?.opts || {});
+    client = mqtt.connect(config.mqtt.brokerUrl, config.mqtt?.opts ?? {});
 
     client.on('connect', function() {
         debug('Connected');

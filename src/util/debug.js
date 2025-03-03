@@ -5,7 +5,7 @@ function logToConsole(...args) {
     return console.log(util.format(...args));
 }
 
-if ((process.env.NODE_OPTIONS || '').endsWith('/debugConnector.js')) {
+if ((process.env.NODE_OPTIONS ?? '').endsWith('/debugConnector.js')) {
     factory.log = logToConsole;
 }
 

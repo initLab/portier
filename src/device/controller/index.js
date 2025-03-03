@@ -10,7 +10,7 @@ export function getController(device) {
 
     switch (controller?.type) {
         case 'mqtt':
-            return getMqttController(controller?.options || {});
+            return getMqttController(controller?.options ?? {});
         default:
             throw new InvalidConfigurationError('Unknown controller type ' + controller?.type + ' for device ' + device.id);
     }
