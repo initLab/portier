@@ -7,11 +7,13 @@ import { getActionLog } from './getActionLog.js';
 import { getLights } from './getLights.js';
 import { getDevices } from './getDevices.js';
 import { middleware as passportMiddleware } from '../../passport.js';
+import { middleware as tokenInfoMiddleware } from '../../tokenInfo.js';
 
 export const apiRouter = new Router();
 
 apiRouter.use(cors());
 apiRouter.use(passportMiddleware());
+apiRouter.use(tokenInfoMiddleware());
 apiRouter.use(json());
 
 apiRouter.get('/devices', getDevices);

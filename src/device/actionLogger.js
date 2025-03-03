@@ -32,7 +32,8 @@ export async function logDeviceActionInternal(userFields, appFields, device, act
     await createActionLog({
         deviceId: device.id,
         action,
-        UserId: user.id,
+        // TODO
+        UserId: user.id ?? 21,
         ApplicationId: application.id,
         ...(createdAt ? {
             createdAt,
