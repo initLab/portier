@@ -41,6 +41,7 @@
                 "bg": "Примерна Врата"
             },
             "type": "door",
+            "group": "door",
             "number": 1,
             "controller": {
                 "type": "dummy"
@@ -57,6 +58,7 @@
                 "bg": "Примерна Врата 2"
             },
             "type": "door",
+            "group": "door",
             "number": 2,
             "public": true,
             "controller": {
